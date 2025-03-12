@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-// import 'package:converter/models/binary.dart';
-// import 'package:converter/models/decimal.dart';
-// import 'package:converter/models/hexadecimal.dart';
-// import 'package:converter/models/octal.dart';
+import 'package:converter/models/binary.dart';
+import 'package:converter/models/decimal.dart';
+import 'package:converter/models/hexadecimal.dart';
+import 'package:converter/models/octal.dart';
 
 class ConverterWidget extends StatefulWidget {
   const ConverterWidget({super.key});
@@ -259,129 +259,129 @@ class _ConverterWidgetState extends State<ConverterWidget> {
       return;
     }
 
-    // String result;
+    String result;
     String explanation = '';
-    // try {
-    //   switch (dropdownValueFrom) {
-    //     case 'Decimal':
-    //       switch (dropdownValueTo) {
-    //         case 'Decimal':
-    //           result = input;
-    //           explanation =
-    //               'No conversion needed. The input is already in Decimal.';
-    //           break;
-    //         case 'Binary':
-    //           result = Decimal.toBinary(input);
-    //           explanation =
-    //               'To convert Decimal to Binary, divide the number by 2 and record the remainders.';
-    //           break;
-    //         case 'Hexadecimal':
-    //           result = Decimal.toHexadecimal(input);
-    //           explanation =
-    //               'To convert Decimal to Hexadecimal, divide the number by 16 and record the remainders.';
-    //           break;
-    //         case 'Octal':
-    //           result = Decimal.toOctal(input);
-    //           explanation =
-    //               'To convert Decimal to Octal, divide the number by 8 and record the remainders.';
-    //           break;
-    //         default:
-    //           result = 'Unknown conversion';
-    //           explanation = 'Conversion not supported.';
-    //       }
-    //       break;
-    //     case 'Binary':
-    //       switch (dropdownValueTo) {
-    //         case 'Decimal':
-    //           result = Binary.toDecimal(input);
-    //           explanation =
-    //               'To convert Binary to Decimal, multiply each bit by 2 raised to its position index and sum the results.';
-    //           break;
-    //         case 'Binary':
-    //           result = input;
-    //           explanation =
-    //               'No conversion needed. The input is already in Binary.';
-    //           break;
-    //         case 'Hexadecimal':
-    //           result = Binary.toHexadecimal(input);
-    //           explanation =
-    //               'To convert Binary to Hexadecimal, group the bits into sets of 4 and convert each group to its hexadecimal equivalent.';
-    //           break;
-    //         case 'Octal':
-    //           result = Binary.toOctal(input);
-    //           explanation =
-    //               'To convert Binary to Octal, group the bits into sets of 3 and convert each group to its octal equivalent.';
-    //           break;
-    //         default:
-    //           result = 'Unknown conversion';
-    //           explanation = 'Conversion not supported.';
-    //       }
-    //       break;
-    //     case 'Octal':
-    //       switch (dropdownValueTo) {
-    //         case 'Decimal':
-    //           result = Octal.toDecimal(input);
-    //           explanation =
-    //               'To convert Octal to Decimal, multiply each digit by 8 raised to its position index and sum the results.';
-    //           break;
-    //         case 'Binary':
-    //           result = Octal.toBinary(input);
-    //           explanation =
-    //               'To convert Octal to Binary, convert each octal digit to its 3-bit binary equivalent.';
-    //           break;
-    //         case 'Octal':
-    //           result = input;
-    //           explanation =
-    //               'No conversion needed. The input is already in Octal.';
-    //           break;
-    //         case 'Hexadecimal':
-    //           result = Octal.toHexadecimal(input);
-    //           explanation =
-    //               'To convert Octal to Hexadecimal, first convert Octal to Binary, then group the bits into sets of 4 and convert each group to its hexadecimal equivalent.';
-    //           break;
-    //         default:
-    //           result = 'Unknown conversion';
-    //           explanation = 'Conversion not supported.';
-    //       }
-    //       break;
-    //     case 'Hexadecimal':
-    //       switch (dropdownValueTo) {
-    //         case 'Decimal':
-    //           result = Hexadecimal.toDecimal(input);
-    //           explanation =
-    //               'To convert Hexadecimal to Decimal, multiply each digit by 16 raised to its position index and sum the results.';
-    //           break;
-    //         case 'Binary':
-    //           result = Hexadecimal.toBinary(input);
-    //           explanation =
-    //               'To convert Hexadecimal to Binary, convert each hexadecimal digit to its 4-bit binary equivalent.';
-    //           break;
-    //         case 'Octal':
-    //           result = Hexadecimal.toOctal(input);
-    //           explanation =
-    //               'To convert Hexadecimal to Octal, first convert Hexadecimal to Binary, then group the bits into sets of 3 and convert each group to its octal equivalent.';
-    //           break;
-    //         case 'Hexadecimal':
-    //           result = input;
-    //           explanation =
-    //               'No conversion needed. The input is already in Hexadecimal.';
-    //           break;
-    //         default:
-    //           result = 'Unknown conversion';
-    //           explanation = 'Conversion not supported.';
-    //       }
-    //       break;
-    //     default:
-    //       result = 'Unknown conversion';
-    //       explanation = 'Conversion not supported.';
-    //   }
-    // } catch (e) {
-    //   result = 'Invalid input';
-    //   explanation = 'Please enter a valid number for the selected conversion.';
-    // }
+    try {
+      switch (dropdownValueFrom) {
+        case 'Decimal':
+          switch (dropdownValueTo) {
+            case 'Decimal':
+              result = input;
+              explanation =
+                  'No conversion needed. The input is already in Decimal.';
+              break;
+            case 'Binary':
+              result = Decimal.toBinary(input);
+              explanation =
+                  'To convert Decimal to Binary, divide the number by 2 and record the remainders.';
+              break;
+            case 'Hexadecimal':
+              result = Decimal.toHexadecimal(input);
+              explanation =
+                  'To convert Decimal to Hexadecimal, divide the number by 16 and record the remainders.';
+              break;
+            case 'Octal':
+              result = Decimal.toOctal(input);
+              explanation =
+                  'To convert Decimal to Octal, divide the number by 8 and record the remainders.';
+              break;
+            default:
+              result = 'Unknown conversion';
+              explanation = 'Conversion not supported.';
+          }
+          break;
+        case 'Binary':
+          switch (dropdownValueTo) {
+            case 'Decimal':
+              result = Binary.toDecimal(input);
+              explanation =
+                  'To convert Binary to Decimal, multiply each bit by 2 raised to its position index and sum the results.';
+              break;
+            case 'Binary':
+              result = input;
+              explanation =
+                  'No conversion needed. The input is already in Binary.';
+              break;
+            case 'Hexadecimal':
+              result = Binary.toHexadecimal(input);
+              explanation =
+                  'To convert Binary to Hexadecimal, group the bits into sets of 4 and convert each group to its hexadecimal equivalent.';
+              break;
+            case 'Octal':
+              result = Binary.toOctal(input);
+              explanation =
+                  'To convert Binary to Octal, group the bits into sets of 3 and convert each group to its octal equivalent.';
+              break;
+            default:
+              result = 'Unknown conversion';
+              explanation = 'Conversion not supported.';
+          }
+          break;
+        case 'Octal':
+          switch (dropdownValueTo) {
+            case 'Decimal':
+              result = Octal.toDecimal(input);
+              explanation =
+                  'To convert Octal to Decimal, multiply each digit by 8 raised to its position index and sum the results.';
+              break;
+            case 'Binary':
+              result = Octal.toBinary(input);
+              explanation =
+                  'To convert Octal to Binary, convert each octal digit to its 3-bit binary equivalent.';
+              break;
+            case 'Octal':
+              result = input;
+              explanation =
+                  'No conversion needed. The input is already in Octal.';
+              break;
+            case 'Hexadecimal':
+              result = Octal.toHexadecimal(input);
+              explanation =
+                  'To convert Octal to Hexadecimal, first convert Octal to Binary, then group the bits into sets of 4 and convert each group to its hexadecimal equivalent.';
+              break;
+            default:
+              result = 'Unknown conversion';
+              explanation = 'Conversion not supported.';
+          }
+          break;
+        case 'Hexadecimal':
+          switch (dropdownValueTo) {
+            case 'Decimal':
+              result = Hexadecimal.toDecimal(input);
+              explanation =
+                  'To convert Hexadecimal to Decimal, multiply each digit by 16 raised to its position index and sum the results.';
+              break;
+            case 'Binary':
+              result = Hexadecimal.toBinary(input);
+              explanation =
+                  'To convert Hexadecimal to Binary, convert each hexadecimal digit to its 4-bit binary equivalent.';
+              break;
+            case 'Octal':
+              result = Hexadecimal.toOctal(input);
+              explanation =
+                  'To convert Hexadecimal to Octal, first convert Hexadecimal to Binary, then group the bits into sets of 3 and convert each group to its octal equivalent.';
+              break;
+            case 'Hexadecimal':
+              result = input;
+              explanation =
+                  'No conversion needed. The input is already in Hexadecimal.';
+              break;
+            default:
+              result = 'Unknown conversion';
+              explanation = 'Conversion not supported.';
+          }
+          break;
+        default:
+          result = 'Unknown conversion';
+          explanation = 'Conversion not supported.';
+      }
+    } catch (e) {
+      result = 'Invalid input';
+      explanation = 'Please enter a valid number for the selected conversion.';
+    }
 
     setState(() {
-      // _convertedValue = result;
+      _convertedValue = result;
       _conversionExplanation = explanation;
     });
   }
