@@ -25,6 +25,7 @@ class _ConverterWidgetState extends State<ConverterWidget> {
   final TextEditingController _controller = TextEditingController();
   String? _convertedValue;
   String _conversionExplanation = '';
+  bool _isNumericKeyboard = true;
 
 //Decimal to Binary
   String decimalToBinaryWithExplanation(int decimal) {
@@ -322,13 +323,15 @@ class _ConverterWidgetState extends State<ConverterWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Colors.blueAccent,
         title: Text(
-          'Base Converter',
+          'Converter App',
           style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.bold,
+                color: Colors.white,
               ),
         ),
+        centerTitle: true,
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
@@ -342,20 +345,40 @@ class _ConverterWidgetState extends State<ConverterWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    TextFormField(
-                      controller: _controller,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            controller: _controller,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              filled: true,
+                              fillColor: Colors.grey[200],
+                              hintText: 'Enter a number',
+                              labelText: 'Input',
+                              prefixIcon: const Icon(Icons.input),
+                            ),
+                            keyboardType: _isNumericKeyboard
+                                ? TextInputType.number
+                                : TextInputType.text,
+                            onChanged: _convertNumber,
+                          ),
                         ),
-                        filled: true,
-                        fillColor: Theme.of(context).colorScheme.surface,
-                        hintText: 'Enter a number',
-                        labelText: 'Input',
-                        prefixIcon: const Icon(Icons.input),
-                      ),
-                      keyboardType: TextInputType.number,
-                      onChanged: _convertNumber,
+                        IconButton(
+                          icon: Icon(
+                              _isNumericKeyboard
+                                  ? Icons.keyboard
+                                  : Icons.numbers,
+                              color: Colors.blueAccent),
+                          onPressed: () {
+                            setState(() {
+                              _isNumericKeyboard = !_isNumericKeyboard;
+                            });
+                          },
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 20),
                     isWideScreen
@@ -365,17 +388,26 @@ class _ConverterWidgetState extends State<ConverterWidget> {
                     Container(
                       padding: const EdgeInsets.all(16.0),
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surface,
+                        color: Colors.blue[50],
                         border: Border.all(
-                          color: Theme.of(context).colorScheme.primary,
+                          color: Colors.blueAccent,
                         ),
-                        borderRadius: BorderRadius.circular(8.0),
+                        borderRadius: BorderRadius.circular(12.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
                       ),
                       child: Text(
                         _convertedValue ?? 'Converted number will appear here.',
                         style:
                             Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                  color: Theme.of(context).colorScheme.primary,
+                                  color: Colors.blueAccent,
+                                  fontWeight: FontWeight.bold,
                                 ),
                         textAlign: TextAlign.center,
                       ),
@@ -384,16 +416,25 @@ class _ConverterWidgetState extends State<ConverterWidget> {
                     Container(
                       padding: const EdgeInsets.all(16.0),
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surface,
+                        color: Colors.red[50],
                         border: Border.all(
-                          color: Colors.red,
+                          color: Colors.redAccent,
                         ),
-                        borderRadius: BorderRadius.circular(8.0),
+                        borderRadius: BorderRadius.circular(12.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
                       ),
                       child: Text(
                         _conversionExplanation,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: Theme.of(context).colorScheme.onSurface,
+                              color: Colors.black,
+                              fontStyle: FontStyle.italic,
                             ),
                         textAlign: TextAlign.center,
                       ),
