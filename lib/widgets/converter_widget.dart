@@ -26,6 +26,298 @@ class _ConverterWidgetState extends State<ConverterWidget> {
   String? _convertedValue;
   String _conversionExplanation = '';
 
+//Decimal to Binary
+  String decimalToBinaryWithExplanation(int decimal) {
+    if (decimal == 0) return "0";
+
+    StringBuffer binary = StringBuffer();
+    StringBuffer explanation =
+        StringBuffer("Proses konversi $decimal ke biner:\n");
+
+    while (decimal > 0) {
+      int remainder = decimal % 2;
+      binary.write(remainder);
+      explanation.write("$decimal / 2 = ${decimal ~/ 2} sisa $remainder\n");
+      decimal = decimal ~/ 2;
+    }
+
+    String binaryResult = binary.toString().split('').reversed.join('');
+    explanation.write("Hasil akhirnya: $binaryResult\n");
+    return explanation.toString();
+  }
+
+//Decimal to Octal
+  String decimalToOctalWithExplanation(int decimal) {
+    if (decimal == 0) return "0";
+
+    StringBuffer octal = StringBuffer();
+    StringBuffer explanation =
+        StringBuffer("Proses konversi $decimal ke oktal:\n");
+
+    while (decimal > 0) {
+      int remainder = decimal % 8;
+      octal.write(remainder);
+      explanation.write("$decimal / 8 = ${decimal ~/ 8} sisa $remainder\n");
+      decimal = decimal ~/ 8;
+    }
+
+    String octalResult = octal.toString().split('').reversed.join('');
+    explanation.write("Hasil akhirnya: $octalResult\n");
+    return explanation.toString();
+  }
+
+//Decimal to Hexadecimal
+  String decimalToHexWithExplanation(int decimal) {
+    if (decimal == 0) return "0";
+
+    const String hexChars = "0123456789ABCDEF";
+    StringBuffer hex = StringBuffer();
+    StringBuffer explanation =
+        StringBuffer("Proses konversi $decimal ke heksadesimal:\n");
+
+    while (decimal > 0) {
+      int remainder = decimal % 16;
+      hex.write(hexChars[remainder]);
+      explanation.write(
+          "$decimal / 16 = ${decimal ~/ 16} sisa ${hexChars[remainder]}\n");
+      decimal = decimal ~/ 16;
+    }
+
+    String hexResult = hex.toString().split('').reversed.join('');
+    explanation.write("Hasil akhirnya: $hexResult\n");
+    return explanation.toString();
+  }
+
+//Binary to Decimal
+  String binaryToDecimalWithExplanation(String binary) {
+    int decimal = 0;
+    StringBuffer explanation =
+        StringBuffer("Proses konversi $binary ke desimal:\n");
+
+    for (int i = 0; i < binary.length; i++) {
+      int bit = int.parse(binary[binary.length - 1 - i]);
+      decimal += bit * (1 << i);
+      explanation.write("$bit × 2^$i = ${bit * (1 << i)}\n");
+    }
+
+    explanation.write("Hasil akhirnya: $decimal\n");
+    return explanation.toString();
+  }
+
+//Binary to Hexadecimal
+  String binaryToHexadecimalWithExplanation(String binary) {
+    StringBuffer explanation =
+        StringBuffer("Proses konversi $binary (biner) ke heksadesimal:\n");
+
+    explanation
+        .write("1. Kelompokkan biner menjadi 4-bit (dari kanan ke kiri):\n");
+
+    //menambahkan 0 jika panjang biner kurang dari
+    int paddingLength = (4 - (binary.length % 4)) % 4;
+    binary = binary.padLeft(binary.length + paddingLength, '0');
+    explanation.write(
+        "   Menambahkan 0 di depan jika panjang kurang dari 4\n   Biner setelah padding: $binary\n");
+
+    explanation.write("2. Konversi setiap kelompok 4-bit ke heksadesimal:\n");
+    StringBuffer hexadecimal = StringBuffer();
+    for (int i = 0; i < binary.length; i += 4) {
+      String binaryGroup = binary.substring(i, i + 4);
+      int decimalValue = int.parse(binaryGroup, radix: 2);
+      String hexDigit = decimalValue.toRadixString(16).toUpperCase();
+      hexadecimal.write(hexDigit);
+      explanation.write("   $binaryGroup (biner) = $hexDigit (heksadesimal)\n");
+    }
+    String hexadecimalResult = hexadecimal.toString();
+    explanation.write("   Hasil akhir (heksadesimal): $hexadecimalResult\n");
+
+    return explanation.toString();
+  }
+
+//Binary to Octal
+  String binaryToOctalWithExplanation(String binary) {
+    StringBuffer explanation =
+        StringBuffer("Proses konversi $binary (biner) ke oktal:\n");
+
+    explanation
+        .write("1. Kelompokkan biner menjadi 3-bit (dari kanan ke kiri):\n");
+
+    int paddingLength = (3 - (binary.length % 3)) % 3;
+    binary = binary.padLeft(binary.length + paddingLength, '0');
+    explanation.write(
+        "   Menambahkan 0 di depan jika panjang kurang dari 3\n   Biner setelah padding: $binary\n");
+
+    explanation.write("2. Konversi setiap kelompok 3-bit ke oktal:\n");
+    StringBuffer octal = StringBuffer();
+    for (int i = 0; i < binary.length; i += 3) {
+      String binaryGroup = binary.substring(i, i + 3);
+      int decimalValue = int.parse(binaryGroup, radix: 2);
+      String octalDigit = decimalValue.toRadixString(8);
+      octal.write(octalDigit);
+      explanation.write("   $binaryGroup (biner) = $octalDigit (oktal)\n");
+    }
+    String octalResult = octal.toString();
+    explanation.write("   Hasil akhir (oktal): $octalResult\n");
+
+    return explanation.toString();
+  }
+
+//Hexadecimal to Decimal
+  String hexadecimalToDecimalWithExplanation(String hex) {
+    const String hexChars = "0123456789ABCDEF";
+    int decimal = 0;
+    StringBuffer explanation =
+        StringBuffer("Proses konversi $hex ke desimal:\n");
+
+    for (int i = 0; i < hex.length; i++) {
+      int value = hexChars.indexOf(hex[hex.length - 1 - i].toUpperCase());
+      decimal += value * (1 << (4 * i));
+      explanation.write("$value × 16^$i = ${value * (1 << (4 * i))}\n");
+    }
+
+    explanation.write("Hasil akhirnya: $decimal\n");
+    return explanation.toString();
+  }
+
+//Hexadecimal to Binary
+  String hexadecimalToBinaryWithExplanation(String hexadecimal) {
+    StringBuffer explanation =
+        StringBuffer("Proses konversi $hexadecimal (heksadesimal) ke biner:\n");
+
+    explanation
+        .write("1. Konversi setiap digit heksadesimal ke biner (4-bit):\n");
+    StringBuffer binary = StringBuffer();
+    for (int i = 0; i < hexadecimal.length; i++) {
+      String hexDigit = hexadecimal[i];
+      int decimalValue = int.parse(hexDigit, radix: 16);
+      String binaryDigit =
+          decimalValue.toRadixString(2).padLeft(4, '0'); // Pastikan 4-bit
+      binary.write(binaryDigit);
+      explanation.write("   $hexDigit (heksadesimal) = $binaryDigit (biner)\n");
+    }
+    String binaryResult = binary.toString();
+    explanation.write("   Hasil akhir (biner): $binaryResult\n");
+
+    return explanation.toString();
+  }
+
+//Hexadecimal to Octal
+  String hexadecimalToOctalWithExplanation(String hexadecimal) {
+    StringBuffer explanation =
+        StringBuffer("Proses konversi $hexadecimal (heksadesimal) ke oktal:\n");
+
+    // 1. Konversi setiap digit heksadesimal ke biner (4-bit)
+    explanation
+        .write("1. Konversi setiap digit heksadesimal ke biner (4-bit):\n");
+    StringBuffer binary = StringBuffer();
+    for (int i = 0; i < hexadecimal.length; i++) {
+      String hexDigit = hexadecimal[i];
+      int decimalValue = int.parse(hexDigit, radix: 16);
+      String binaryDigit =
+          decimalValue.toRadixString(2).padLeft(4, '0'); // Pastikan 4-bit
+      binary.write(binaryDigit);
+      explanation.write("   $hexDigit (heksadesimal) = $binaryDigit (biner)\n");
+    }
+    String binaryResult = binary.toString();
+    explanation.write("   Hasil sementara (biner): $binaryResult\n\n");
+
+    // 2. Kelompokkan biner menjadi 3-bit (dari kanan ke kiri)
+    explanation
+        .write("2. Kelompokkan biner menjadi 3-bit (dari kanan ke kiri):\n");
+    // Tambahkan leading zeros jika panjang biner tidak kelipatan 3
+    int paddingLength = (3 - (binaryResult.length % 3)) % 3;
+    binaryResult =
+        binaryResult.padLeft(binaryResult.length + paddingLength, '0');
+    explanation.write("   Biner setelah padding: $binaryResult\n");
+
+    // 3. Konversi setiap kelompok 3-bit ke oktal
+    explanation.write("3. Konversi setiap kelompok 3-bit ke oktal:\n");
+    StringBuffer octal = StringBuffer();
+    for (int i = 0; i < binaryResult.length; i += 3) {
+      String binaryGroup = binaryResult.substring(i, i + 3);
+      int decimalValue = int.parse(binaryGroup, radix: 2);
+      String octalDigit = decimalValue.toRadixString(8);
+      octal.write(octalDigit);
+      explanation.write("   $binaryGroup (biner) = $octalDigit (oktal)\n");
+    }
+    String octalResult = octal.toString();
+    explanation.write("   Hasil akhir (oktal): $octalResult\n");
+
+    return explanation.toString();
+  }
+
+//Octal to Decimal
+  String octalToDecimalWithExplanation(String octal) {
+    int decimal = 0;
+    StringBuffer explanation = StringBuffer(
+        "Proses konversi $octal ke desimal:\n Dimulai digit paling kanan dikalikan 8^n \n");
+
+    for (int i = 0; i < octal.length; i++) {
+      int digit = int.parse(octal[octal.length - 1 - i]);
+      decimal += digit * (1 << (3 * i));
+      explanation.write("$digit × 8^$i = ${digit * (1 << (3 * i))}\n");
+    }
+
+    explanation.write("Hasil akhirnya: $decimal\n");
+    return explanation.toString();
+  }
+
+//Octal to binary
+  String octalToBinaryWithExplanation(String octal) {
+    StringBuffer explanation =
+        StringBuffer("Proses konversi $octal (oktal) ke biner:\n");
+
+    explanation.write("1. Konversi setiap digit oktal ke biner (3-bit):\n");
+    StringBuffer binary = StringBuffer();
+    for (int i = 0; i < octal.length; i++) {
+      String octalDigit = octal[i];
+      int decimalValue = int.parse(octalDigit, radix: 8);
+      String binaryDigit =
+          decimalValue.toRadixString(2).padLeft(3, '0'); // Pastikan 3-bit
+      binary.write(binaryDigit);
+      explanation.write("   $octalDigit (oktal) = $binaryDigit (biner)\n");
+    }
+    String binaryResult = binary.toString();
+    explanation.write("   Hasil akhir (biner): $binaryResult\n");
+
+    return explanation.toString();
+  }
+
+//Ocatal to Hexadecimal
+  String octalToHexadecimalWithExplanation(String octal) {
+    int decimal = 0;
+    StringBuffer explanation =
+        StringBuffer("Proses konversi $octal ke heksadesimal:\n");
+    explanation.write("1. Konversi oktal ke desimal:\n");
+
+    for (int i = 0; i < octal.length; i++) {
+      int digit = int.parse(octal[octal.length - 1 - i]);
+      decimal += digit * (1 << (3 * i)); // 1 << 3 = 8, 1 << 6 = 64, dst.
+      explanation.write("   $digit × 8^$i = ${digit * (1 << (3 * i))}\n");
+    }
+    explanation.write("   Hasil sementara (desimal): $decimal\n\n");
+
+    StringBuffer hexadecimal = StringBuffer();
+    explanation.write(
+        "2. Konversi desimal ke heksadesimal:\n $decimal di Modulo dengan 16\n");
+    int tempDecimal = decimal;
+    while (tempDecimal > 0) {
+      int remainder = tempDecimal % 16;
+      String hexDigit = remainder < 10
+          ? remainder.toString()
+          : String.fromCharCode(65 + (remainder - 10));
+      hexadecimal.write(hexDigit);
+      explanation.write(
+          "   $tempDecimal ÷ 16 = ${tempDecimal ~/ 16} sisa $remainder ($hexDigit)\n");
+      tempDecimal = tempDecimal ~/ 16;
+    }
+
+    String hexadecimalResult =
+        hexadecimal.toString().split('').reversed.join('');
+    explanation.write("   Hasil akhir (heksadesimal): $hexadecimalResult\n");
+
+    return explanation.toString();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,7 +386,7 @@ class _ConverterWidgetState extends State<ConverterWidget> {
                       decoration: BoxDecoration(
                         color: Theme.of(context).colorScheme.surface,
                         border: Border.all(
-                          color: Theme.of(context).colorScheme.primary,
+                          color: Colors.red,
                         ),
                         borderRadius: BorderRadius.circular(8.0),
                       ),
@@ -267,23 +559,19 @@ class _ConverterWidgetState extends State<ConverterWidget> {
           switch (dropdownValueTo) {
             case 'Decimal':
               result = input;
-              explanation =
-                  'No conversion needed. The input is already in Decimal.';
+              explanation = '-';
               break;
             case 'Binary':
               result = Decimal.toBinary(input);
-              explanation =
-                  'To convert Decimal to Binary, divide the number by 2 and record the remainders.';
+              explanation = decimalToBinaryWithExplanation(int.parse(input));
               break;
             case 'Hexadecimal':
               result = Decimal.toHexadecimal(input);
-              explanation =
-                  'To convert Decimal to Hexadecimal, divide the number by 16 and record the remainders.';
+              explanation = decimalToHexWithExplanation(int.parse(input));
               break;
             case 'Octal':
               result = Decimal.toOctal(input);
-              explanation =
-                  'To convert Decimal to Octal, divide the number by 8 and record the remainders.';
+              explanation = decimalToOctalWithExplanation(int.parse(input));
               break;
             default:
               result = 'Unknown conversion';
@@ -294,23 +582,19 @@ class _ConverterWidgetState extends State<ConverterWidget> {
           switch (dropdownValueTo) {
             case 'Decimal':
               result = Binary.toDecimal(input);
-              explanation =
-                  'To convert Binary to Decimal, multiply each bit by 2 raised to its position index and sum the results.';
+              explanation = binaryToDecimalWithExplanation(input);
               break;
             case 'Binary':
               result = input;
-              explanation =
-                  'No conversion needed. The input is already in Binary.';
+              explanation = '-';
               break;
             case 'Hexadecimal':
               result = Binary.toHexadecimal(input);
-              explanation =
-                  'To convert Binary to Hexadecimal, group the bits into sets of 4 and convert each group to its hexadecimal equivalent.';
+              explanation = binaryToHexadecimalWithExplanation(input);
               break;
             case 'Octal':
               result = Binary.toOctal(input);
-              explanation =
-                  'To convert Binary to Octal, group the bits into sets of 3 and convert each group to its octal equivalent.';
+              explanation = binaryToOctalWithExplanation(input);
               break;
             default:
               result = 'Unknown conversion';
@@ -321,23 +605,19 @@ class _ConverterWidgetState extends State<ConverterWidget> {
           switch (dropdownValueTo) {
             case 'Decimal':
               result = Octal.toDecimal(input);
-              explanation =
-                  'To convert Octal to Decimal, multiply each digit by 8 raised to its position index and sum the results.';
+              explanation = octalToDecimalWithExplanation(input);
               break;
             case 'Binary':
               result = Octal.toBinary(input);
-              explanation =
-                  'To convert Octal to Binary, convert each octal digit to its 3-bit binary equivalent.';
+              explanation = octalToBinaryWithExplanation(input);
               break;
             case 'Octal':
               result = input;
-              explanation =
-                  'No conversion needed. The input is already in Octal.';
+              explanation = '-';
               break;
             case 'Hexadecimal':
               result = Octal.toHexadecimal(input);
-              explanation =
-                  'To convert Octal to Hexadecimal, first convert Octal to Binary, then group the bits into sets of 4 and convert each group to its hexadecimal equivalent.';
+              explanation = octalToHexadecimalWithExplanation(input);
               break;
             default:
               result = 'Unknown conversion';
@@ -348,23 +628,19 @@ class _ConverterWidgetState extends State<ConverterWidget> {
           switch (dropdownValueTo) {
             case 'Decimal':
               result = Hexadecimal.toDecimal(input);
-              explanation =
-                  'To convert Hexadecimal to Decimal, multiply each digit by 16 raised to its position index and sum the results.';
+              explanation = hexadecimalToDecimalWithExplanation(input);
               break;
             case 'Binary':
               result = Hexadecimal.toBinary(input);
-              explanation =
-                  'To convert Hexadecimal to Binary, convert each hexadecimal digit to its 4-bit binary equivalent.';
+              explanation = hexadecimalToBinaryWithExplanation(input);
               break;
             case 'Octal':
               result = Hexadecimal.toOctal(input);
-              explanation =
-                  'To convert Hexadecimal to Octal, first convert Hexadecimal to Binary, then group the bits into sets of 3 and convert each group to its octal equivalent.';
+              explanation = hexadecimalToOctalWithExplanation(input);
               break;
             case 'Hexadecimal':
               result = input;
-              explanation =
-                  'No conversion needed. The input is already in Hexadecimal.';
+              explanation = '-';
               break;
             default:
               result = 'Unknown conversion';
